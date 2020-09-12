@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.tencent.atlas</groupId>
+    <artifactId>rule-engine</artifactId>
+    <version>1.0.0_20200825</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>rule-core</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <scala.binary.version>2.11</scala.binary.version>
+        <scala-library.version>2.11.8</scala-library.version>
+        <maven-compiler-plugin.source>1.8</maven-compiler-plugin.source>
+        <maven-compiler-plugin.target>1.8</maven-compiler-plugin.target>
+        <maven-shade-plugin.version>2.4.3</maven-shade-plugin.version>
+        <maven-source-plugin.version>2.0.2</maven-source-plugin.version>
+        <maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
+        <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
+        <scala.version>2.11.8</scala.version>
+        <scala-maven-plugin.version>3.1.0</scala-maven-plugin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.projectreactor</groupId>
+                <artifactId>reactor-core</artifactId>
+                <version>3.3.0.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.velocity.tools</groupId>
+                <artifactId>velocity-tools-generic</artifactId>
+                <version>3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.antlr</groupId>
+                <artifactId>antlr4-runtime</artifactId>
+                <version>4.8</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>28.0-jre</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>3.11</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>5.2.7.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>5.2.7.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>5.2.7.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>3.4.6</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>5.2.7.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-api</artifactId>
+                <version>1.7.30</version>
+            </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-log4j12</artifactId>
+                <version>1.7.30</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.68</version>
+            </dependency>
+            <dependency>
+                <groupId>org.reflections</groupId>
+                <artifactId>reflections</artifactId>
+                <version>0.9.10</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-collections4</artifactId>
+                <version>4.4</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>${maven-compiler-plugin.source}</source>
+                    <target>${maven-compiler-plugin.target}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--      <plugin>-->
+            <!--        <groupId>org.apache.maven.plugins</groupId>-->
+            <!--        <artifactId>maven-shade-plugin</artifactId>-->
+            <!--        <version>${maven-shade-plugin.version}</version>-->
+            <!--        <executions>-->
+            <!--          <execution>-->
+            <!--            <phase>package</phase>-->
+            <!--            <goals>-->
+            <!--              <goal>shade</goal>-->
+            <!--            </goals>-->
+            <!--            <configuration>-->
+            <!--              <minimizeJar>false</minimizeJar>-->
+            <!--              <shadedArtifactAttached>true</shadedArtifactAttached>-->
+            <!--              <artifactSet>-->
+            <!--                <includes>-->
+            <!--                  &lt;!&ndash; Include here the dependencies you-->
+            <!--                      want to be packed in your fat jar &ndash;&gt;-->
+            <!--                  <include>*:*</include>-->
+            <!--                </includes>-->
+            <!--              </artifactSet>-->
+            <!--              <filters>-->
+            <!--                <filter>-->
+            <!--                  <artifact>*:*</artifact>-->
+            <!--                  <excludes>-->
+            <!--                    <exclude>META-INF/*.SF</exclude>-->
+            <!--                    <exclude>META-INF/*.DSA</exclude>-->
+            <!--                    <exclude>META-INF/*.RSA</exclude>-->
+            <!--                  </excludes>-->
+            <!--                </filter>-->
+            <!--              </filters>-->
+            <!--              <transformers>-->
+            <!--                <transformer-->
+            <!--                  implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">-->
+            <!--                  <resource>reference.conf</resource>-->
+            <!--                </transformer>-->
+            <!--              </transformers>-->
+            <!--            </configuration>-->
+            <!--          </execution>-->
+            <!--        </executions>-->
+            <!--      </plugin>-->
+        </plugins>
+    </build>
+
+    <distributionManagement>
+        <repository>
+            <id>atlas-repo</id>
+            <name>tencent mirror</name>
+            <url>http://mirrors.tencent.com/repository/maven/atlas/</url>
+        </repository>
+    </distributionManagement>
+    <repositories>
+        <repository>
+            <id>tencent-repo</id>
+            <name>tencent mirror</name>
+            <url>https://mirrors.tencent.com/nexus/repository/maven-public/</url>
+        </repository>
+        <repository>
+            <id>atlas-repo</id>
+            <name>tencent mirror</name>
+            <url>http://mirrors.tencent.com/repository/maven/atlas/</url>
+        </repository>
+        <repository>
+            <id>public-repo</id>
+            <name>public repo</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
+    <pluginRepositories>
+        <pluginRepository>
+            <id>tencent-mirror-plugin</id>
+            <name>tencent mirror plugin</name>
+            <url>https://mirrors.tencent.com/nexus/repository/maven-public/</url>
+        </pluginRepository>
+    </pluginRepositories>
+
+</project>

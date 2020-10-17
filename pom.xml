@@ -4,28 +4,32 @@
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.tencent.atlas</groupId>
-    <artifactId>rule-engine</artifactId>
+    <groupId>org.learn2pro.atlas</groupId>
+    <artifactId>atlas-engine</artifactId>
     <version>1.0.0_20200825</version>
     <packaging>pom</packaging>
 
     <modules>
         <module>rule-core</module>
+        <module>spark-extension-core</module>
     </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <scala.binary.version>2.11</scala.binary.version>
-        <scala-library.version>2.11.8</scala-library.version>
+        <scala.binary.version>${scala.main.version}</scala.binary.version>
+        <scala-library.version>${scala.main.version}.8</scala-library.version>
         <maven-compiler-plugin.source>1.8</maven-compiler-plugin.source>
         <maven-compiler-plugin.target>1.8</maven-compiler-plugin.target>
         <maven-shade-plugin.version>2.4.3</maven-shade-plugin.version>
         <maven-source-plugin.version>2.0.2</maven-source-plugin.version>
         <maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
         <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
-        <scala.version>2.11.8</scala.version>
+        <scala.version>${scala.main.version}.12</scala.version>
         <scala-maven-plugin.version>3.1.0</scala-maven-plugin.version>
+        <spark.version>2.4.6</spark.version>
+        <scala.main.version>2.11</scala.main.version>
+        <java.version>1.8</java.version>
     </properties>
 
     <dependencyManagement>
@@ -111,6 +115,31 @@
                 <artifactId>commons-collections4</artifactId>
                 <version>4.4</version>
             </dependency>
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-core_${scala.main.version}</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-catalyst_${scala.main.version}</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-sql_${scala.main.version}</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-hive_${scala.main.version}</artifactId>
+                <version>${spark.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>${scala.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -182,37 +211,5 @@
             <!--      </plugin>-->
         </plugins>
     </build>
-
-    <distributionManagement>
-        <repository>
-            <id>atlas-repo</id>
-            <name>tencent mirror</name>
-            <url>http://mirrors.tencent.com/repository/maven/atlas/</url>
-        </repository>
-    </distributionManagement>
-    <repositories>
-        <repository>
-            <id>tencent-repo</id>
-            <name>tencent mirror</name>
-            <url>https://mirrors.tencent.com/nexus/repository/maven-public/</url>
-        </repository>
-        <repository>
-            <id>atlas-repo</id>
-            <name>tencent mirror</name>
-            <url>http://mirrors.tencent.com/repository/maven/atlas/</url>
-        </repository>
-        <repository>
-            <id>public-repo</id>
-            <name>public repo</name>
-            <url>https://repo.maven.apache.org/maven2/</url>
-        </repository>
-    </repositories>
-    <pluginRepositories>
-        <pluginRepository>
-            <id>tencent-mirror-plugin</id>
-            <name>tencent mirror plugin</name>
-            <url>https://mirrors.tencent.com/nexus/repository/maven-public/</url>
-        </pluginRepository>
-    </pluginRepositories>
 
 </project>

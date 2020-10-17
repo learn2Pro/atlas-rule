@@ -1,6 +1,6 @@
 grammar Atlas;
 @header {
-    package com.tencent.atlas.antlr;
+    package org.learn2pro.atlas.antlr;
 }
 
 

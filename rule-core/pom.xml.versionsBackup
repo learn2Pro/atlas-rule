@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>rule-core</artifactId>
-    <version>1.0.0_20210116</version>
+    <version>1.0.0_20200825</version>
 
     <parent>
         <groupId>com.tencent.atlas</groupId>
         <artifactId>rule-engine</artifactId>
-        <version>1.0.0_20210116</version>
+        <version>1.0.0_20200825</version>
     </parent>
 
     <dependencies>

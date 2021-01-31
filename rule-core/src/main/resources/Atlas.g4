@@ -1,6 +1,6 @@
 grammar Atlas;
 @header {
-    package org.learn2pro.atlas.antlr;
+    package com.tencent.atlas.antlr;
 }
 
 
@@ -11,19 +11,19 @@ expressions
     ;
 
 expression
-    : notOperator=(NOT | '!') expression                            #notExpression
+    : notOperator=('NOT'|'not' | '!') expression                    #notExpression
     | expression logicalOperator expression                         #logicalExpression
-    | predicate IS NOT? testValue=(TRUE | FALSE)                    #isExpression
+    | predicate IS isOrNot=('NOT'|'not')? testValue=(TRUE | FALSE)  #isExpression
     | predicate                                                     #predicateExpression
     ;
 
 predicate
-    : predicate NOT? IN '(' expressions ')'                      #inPredicate
-    | predicate IS nullNotnull                                   #isNullPredicate
-    | left=predicate comparisonOperator right=predicate          #binaryComparasionPredicate
-    | predicate NOT? LIKE predicate (ESCAPE STRING_LITERAL)?     #likePredicate
-    | predicate NOT? regex=(REGEXP | RLIKE) predicate            #regexpPredicate
-    | expressionAtom                                             #expressionAtomPredicate
+    : predicate isOrNot=('NOT'|'not')? IN '(' expressions ')'                      #inPredicate
+    | predicate IS nullNotnull                                                     #isNullPredicate
+    | left=predicate comparisonOperator right=predicate                            #binaryComparasionPredicate
+    | predicate isOrNot=('NOT'|'not')? LIKE predicate (ESCAPE STRING_LITERAL)?     #likePredicate
+    | predicate isOrNot=('NOT'|'not')? regex=(REGEXP | RLIKE) predicate            #regexpPredicate
+    | expressionAtom                                                               #expressionAtomPredicate
     ;
 
 
@@ -68,6 +68,15 @@ specificFunction
       '('
           sourceExpression=expression
       ')'                                                           #getLengthFunctionCall
+    | CASE caseFuncAlternative+
+      (ELSE elseArg=functionArg)? END                               #caseFunctionCall
+    |IF predicate THEN ifconsequent=functionArg
+       (ELSE elseconsequent=functionArg)? END IF                       #ifFunctionCall
+    ;
+
+caseFuncAlternative
+    : WHEN condition=predicate
+      THEN consequent=functionArg
     ;
 
 functionArgs
@@ -111,7 +120,7 @@ floatLiteral
     ;
 
 nullNotnull
-    : NOT? (NULL_LITERAL | NULL_SPEC_LITERAL)
+    : isOrNot=('NOT'|'not')? (NULL_LITERAL | NULL_SPEC_LITERAL)
     ;
 
 unaryOperator
@@ -148,9 +157,15 @@ fullId
     ;
 
 
-NULL_LITERAL:                        'NULL';
+NULL_LITERAL:                        'NULL'|'null';
 NULL_SPEC_LITERAL:                   '\\' 'N';
 AND:                                 'AND'|'and';
+CASE:                                'CASE'|'case';
+IF:                                  'IF'|'if';
+ELSE:                                'ELSE'|'else';
+WHEN:                                'WHEN'|'when';
+THEN:                                'THEN'|'then';
+END:                                 'END'|'end';
 OR:                                  'OR'|'or';
 IS:                                  'IS'|'is';
 NOT:                                 'NOT'|'not';
@@ -161,16 +176,16 @@ STRING_LITERAL:                      DQUOTA_STRING | SQUOTA_STRING | BQUOTA_STRI
 DECIMAL_LITERAL:                     DEC_DIGIT+;
 HEXADECIMAL_LITERAL:                 'X' '\'' (HEX_DIGIT HEX_DIGIT)+ '\''
                                      | '0X' HEX_DIGIT+;
+IN:                                  'IN'|'in';
+TRUE:                                'TRUE'|'true';
+FALSE:                               'FALSE'|'false';
+FROM:                                'FROM'|'from';
+FOR:                                 'FOR'|'for';
+ESCAPE:                              'ESCAPE'|'escape';
 IDENTIFIER:                          [A-Z0-9a-z_]+;
 SUBSTR:                              'SUBSTR'|'substr';
 SUBSTRING:                           'SUBSTRING'|'substring';
 CHAR_LENGTH:                         'CHAR_LENGTH'|'char_length';
-FROM:                                'FROM'|'from';
-FOR:                                 'FOR'|'for';
-ESCAPE:                              'ESCAPE'|'escape';
-IN:                                  'IN';
-TRUE:                                'TRUE'|'true';
-FALSE:                               'FALSE'|'false';
 ZERO_DECIMAL:                        '0';
 ONE_DECIMAL:                         '1';
 TWO_DECIMAL:                         '2';
@@ -189,5 +204,6 @@ fragment DEC_DIGIT:                  [0-9];
 
 // SKIP
 SPACE:                               [ \t\r\n]+    -> channel(HIDDEN);
+
 
 

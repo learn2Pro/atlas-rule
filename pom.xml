@@ -27,7 +27,7 @@
         <maven-jar-plugin.version>2.6</maven-jar-plugin.version>
         <scala.version>${scala.main.version}.12</scala.version>
         <scala-maven-plugin.version>3.1.0</scala-maven-plugin.version>
-        <spark.version>2.4.6</spark.version>
+        <spark.version>2.3.1</spark.version>
         <scala.main.version>2.11</scala.main.version>
         <java.version>1.8</java.version>
     </properties>
@@ -139,6 +139,17 @@
                 <groupId>org.scala-lang</groupId>
                 <artifactId>scala-library</artifactId>
                 <version>${scala.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest_${scala.binary.version}</artifactId>
+                <version>3.2.2</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.tencent.atlas</groupId>
+                <artifactId>feature-spark-extension</artifactId>
+                <version>1.0.0_20201015</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

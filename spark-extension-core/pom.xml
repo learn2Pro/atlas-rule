@@ -45,10 +45,6 @@
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>
-            <artifactId>spark-catalyst_${scala.main.version}</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.spark</groupId>
             <artifactId>spark-sql_${scala.main.version}</artifactId>
         </dependency>
         <dependency>
@@ -56,8 +52,21 @@
             <artifactId>spark-hive_${scala.main.version}</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.apache.spark</groupId>
+            <artifactId>spark-catalyst_2.11</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_${scala.binary.version}</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tencent.atlas</groupId>
+            <artifactId>feature-spark-extension</artifactId>
         </dependency>
     </dependencies>
 
